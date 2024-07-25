@@ -16,22 +16,22 @@ function App() {
 
 export const stockTradingRouter=createBrowserRouter([
   {
-    path:'/',
-    element:<Home />,
-    errorElement:<Error />,
-    children:[
-      // {
-      //   path:'/home',
-      //   element:<Home />
-      // },
+    path: '/',
+    element: <App />,
+    errorElement: <Error />,
+    children: [
       {
-        path:'/login',
-        element:<Login />
+        path: '/home',
+        element: <Home />
       },
       {
-        path:'/register',
-        element:<Register />
+        path: '/login',
+        element: <Login />
       },
+      {
+        path: '/register',
+        element: <Register />
+      }
     ]
   }
 ]
