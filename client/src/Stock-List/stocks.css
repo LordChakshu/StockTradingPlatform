@@ -1,0 +1,25 @@
+.stock-list-container{
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.stock-list-header{
+    background-color: #f2f2f2;
+    font-size: 22px;
+    text-align: start !important;
+    padding: 15px;
+}
+.top-stocks-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .top-stocks-table th,
+  .top-stocks-table td {
+    border: 1px solid rgba(0, 0, 0, 0.158); /* You can customize the border color */
+    padding: 5px;
+    text-align: left;
+  }
+  
+  .top-stocks-table th {
+    background-color: #f2f2f2; /* Optional: Add background color to table headers */
+  }
+  

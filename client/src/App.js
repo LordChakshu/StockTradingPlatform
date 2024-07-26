@@ -5,6 +5,7 @@ import Login from './Auth/login/login';
 import Home from './Home/home'
 import {createBrowserRouter, Outlet} from "react-router-dom"
 import Error from './Error/error';
+import StockList from './Stock-List/stocks';
 
 function App() {
   return (
@@ -31,6 +32,10 @@ export const stockTradingRouter=createBrowserRouter([
       {
         path: '/register',
         element: <Register />
+      },
+      {
+        path:'/stocks',
+        element:<StockList />
       }
     ]
   }
