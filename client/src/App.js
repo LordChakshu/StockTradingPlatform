@@ -1,45 +1,46 @@
-import './App.css';
-import './global.css'
-import Register from './Auth/register/Register';
-import Login from './Auth/login/login';
-import Home from './Home/home'
-import {createBrowserRouter, Outlet} from "react-router-dom"
-import Error from './Error/error';
-import StockList from './Stock-List/stocks';
+import "./App.css";
+import "./global.css";
+import Register from "./Auth/register/Register";
+import Login from "./Auth/login/login";
+import Home from "./Home/home";
+import { createBrowserRouter, Outlet } from "react-router-dom";
+import Error from "./Error/error";
+import StockList from "./Stock-List/stocks";
+import NavBar from "./NavBar/navBar"
 
 function App() {
   return (
     <div className="App">
-    <Outlet />
+      <NavBar />
+      <Outlet />
     </div>
   );
 }
 
-export const stockTradingRouter=createBrowserRouter([
+export const stockTradingRouter = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <App />,
     errorElement: <Error />,
     children: [
       {
-        path: '/home',
-        element: <Home />
+        path: "/home",
+        element: <Home />,
       },
       {
-        path: '/login',
-        element: <Login />
+        path: "/login",
+        element: <Login />,
       },
       {
-        path: '/register',
-        element: <Register />
+        path: "/register",
+        element: <Register />,
       },
       {
-        path:'/stocks',
-        element:<StockList />
-      }
-    ]
-  }
-]
-);
+        path: "/stocks",
+        element: <StockList />,
+      },
+    ],
+  },
+]);
 
 export default App;
