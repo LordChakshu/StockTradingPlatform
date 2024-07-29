@@ -6,13 +6,16 @@ import Home from "./Home/home";
 import { createBrowserRouter, Outlet } from "react-router-dom";
 import Error from "./Error/error";
 import StockList from "./Stock-List/stocks";
-import NavBar from "./NavBar/navBar"
+import NavBar from "./NavBar/navBar";
+import { StockProvider } from "./Stock-List/stockContext";
 
 function App() {
   return (
     <div className="App">
       <NavBar />
-      <Outlet />
+      <StockProvider>
+        <Outlet />
+      </StockProvider>
     </div>
   );
 }

@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import './stocks.css'
+import { StockContext } from "./stockContext";
 const API_KEY = "cqhu6m9r01qgbqu602hgcqhu6m9r01qgbqu602i0";
 
 const StockList = () => {
-  const [stockData, setStockData] = useState([]);
+  const { stockData, setStockData } = useContext(StockContext);
   const [tickerData, setTickerData] = useState([]);
 
   useEffect(() => {
