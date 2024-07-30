@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { StockContext } from "../Stock-List/stockContext";
 
 const Home = () => {

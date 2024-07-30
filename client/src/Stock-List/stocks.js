@@ -1,60 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import './stocks.css'
 import { StockContext } from "./stockContext";
-const API_KEY = "cqhu6m9r01qgbqu602hgcqhu6m9r01qgbqu602i0";
 
 const StockList = () => {
   const { stockData, setStockData } = useContext(StockContext);
-  const [tickerData, setTickerData] = useState([]);
-
-  useEffect(() => {
-    getTickerList();
-  }, []);
-
-  const getStockData = async (symbol) => {
-    try {
-      const response = await fetch(
-        `https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${API_KEY}`
-      );
-
-      const data = await response.json();
-      return { symbol, ...data };
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  // const getTickerList=async()=>{
-  //   try{
-  //     const response=await fetch(`https://api.polygon.io/v3/reference/tickers?active=true&limit=100&apiKey=${API_KEY}`);
-  //     const data=await response.json();
-  //     setTickerData(data);
-  //   }
-  //   catch(err){
-  //     console.log(err)
-  //   }
-  // }
-
-  const getTickerList = async () => {
-    try {
-      const response = await fetch(
-        `https://finnhub.io/api/v1/stock/symbol?exchange=US&token=${API_KEY}`
-      );
-      const data = await response.json();
-      setTickerData(data);
-
-      if (response.ok) {
-        const ticker = data.slice(0, 30).map((item) => item.symbol);
-        console.log(ticker);
-        const stockPromises = ticker.map((item) => getStockData(item));
-        const stockDataArray = await Promise.all(stockPromises);
-        setStockData(stockDataArray);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
+  const {tickerData, setTickerData} = useContext(StockContext);
+  
   return (
     <div className="stock-list-container">
       <div className="stock-list-header"><strong>STOCKS LIST</strong></div>
