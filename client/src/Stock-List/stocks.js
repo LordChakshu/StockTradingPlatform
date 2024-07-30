@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import './stocks.css'
-import { StockContext } from "./stockContext";
+import { stockContext } from "./stockContext";
 
 const StockList = () => {
-  const { stockData, setStockData } = useContext(StockContext);
-  const {tickerData, setTickerData} = useContext(StockContext);
+  const { stockData, setStockData } = useContext(stockContext);
+  const {tickerData, setTickerData} = useContext(stockContext);
   
   return (
     <div className="stock-list-container">

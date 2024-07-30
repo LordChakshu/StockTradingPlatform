@@ -3,7 +3,7 @@ import { createContext, useEffect, useState } from "react";
 
 const API_KEY = "cqhu6m9r01qgbqu602hgcqhu6m9r01qgbqu602i0";
 
-export const StockContext=createContext(); 
+export const stockContext=createContext(); 
 
 export const StockProvider=({children})=>{
 
@@ -46,9 +46,9 @@ export const StockProvider=({children})=>{
       }, []);
 
     return (
-        <StockContext.Provider value={{stockData,setStockData, tickerData, setTickerData}} >
+        <stockContext.Provider value={{stockData,setStockData, tickerData, setTickerData}} >
             {children}
-        </StockContext.Provider>
+        </stockContext.Provider>
     );
 
 
