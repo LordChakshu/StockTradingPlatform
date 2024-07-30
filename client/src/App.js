@@ -8,13 +8,17 @@ import Error from "./Error/error";
 import StockList from "./Stock-List/stocks";
 import NavBar from "./NavBar/navBar";
 import { StockProvider } from "./Stock-List/stockContext";
+import CryptoList from "./Crypto/crypto";
+import { CryptoProvider } from "./Crypto/cryptoContext";
 
 function App() {
   return (
     <div className="App">
       <NavBar />
       <StockProvider>
-        <Outlet />
+        <CryptoProvider>
+          <Outlet />
+        </CryptoProvider>
       </StockProvider>
     </div>
   );
@@ -41,6 +45,10 @@ export const stockTradingRouter = createBrowserRouter([
       {
         path: "/stocks",
         element: <StockList />,
+      },
+      {
+        path: "/crypto",
+        element: <CryptoList />,
       },
     ],
   },

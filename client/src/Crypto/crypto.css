@@ -1,0 +1,28 @@
+.crypto-container{
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.crypto-header{
+    background-color: #f2f2f2;
+    font-size: 22px;
+    text-align: start !important;
+    padding: 15px;
+}
+.crypto-list-container {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .top-crypto-table{
+    border-collapse: collapse;
+  }
+  
+  .top-crypto-table th,
+  .top-crypto-table td {
+    border: 1px solid rgba(0, 0, 0, 0.158);
+    padding: 5px;
+    text-align: left;
+  }
+  
+  .top-crypto-table th {
+    background-color: #f2f2f2; 
+  }
+  
