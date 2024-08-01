@@ -10,6 +10,7 @@ import NavBar from "./NavBar/navBar";
 import { StockProvider } from "./Stock-List/stockContext";
 import CryptoList from "./Crypto/crypto";
 import { CryptoProvider } from "./Crypto/cryptoContext";
+import Forex from "./Forex/forex";
 
 function App() {
   return (
@@ -49,6 +50,10 @@ export const stockTradingRouter = createBrowserRouter([
       {
         path: "/crypto",
         element: <CryptoList />,
+      },
+      {
+        path: "/forex",
+        element: <Forex />,
       },
     ],
   },
