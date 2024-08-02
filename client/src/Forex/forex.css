@@ -1,0 +1,43 @@
+.forex-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  text-align: center;
+}
+.forex-header {
+  font-size: 26px;
+  margin-top: 20px;
+}
+.forex-header-text {
+  background-color: #f2f2f2;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.exchange-container {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  justify-content: center;
+}
+.currency-input {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.output {
+  display: flex;
+}
+.convert-button {
+  height: 40px;
+  color: #f2f2f2;
+  background: black;
+  border-radius: 5px;
+}
+.main-content {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background: #b3d1e6;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
