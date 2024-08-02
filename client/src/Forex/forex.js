@@ -70,7 +70,7 @@ const Forex = () => {
           Foreign Currency Exchange Calculator
         </span>
       </div>
-      <div className="main-content">
+      <div className="forex-main-content">
         <div className="exchange-container">
           <div className="currency-input">
             <input

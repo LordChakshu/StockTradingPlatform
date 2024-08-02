@@ -33,7 +33,7 @@
   background: black;
   border-radius: 5px;
 }
-.main-content {
+.forex-main-content {
   display: flex;
   flex-direction: column;
   padding: 20px;
