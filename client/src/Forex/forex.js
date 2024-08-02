@@ -37,23 +37,22 @@ const Forex = () => {
         `https://api.forexfeed.net/convert/${API_ID}/${fromAmount}/${toCurrency}/${fromCurrency}`
       );
       // const data = await response.json();
-      const textData = await response.text(); // get the response as text
+      const textData = await response.text(); 
 
-      // Find the section with the data you need
+      
       const quoteStart = textData.indexOf("QUOTE START");
       const quoteEnd = textData.indexOf("QUOTE END");
 
       if (quoteStart !== -1 && quoteEnd !== -1) {
         const quoteData = textData
-          .slice(quoteStart + 11, quoteEnd) // Extract the quote data
-          .trim() // Remove any extra whitespace
-          .split(","); // Split by comma to get individual fields
+          .slice(quoteStart + 11, quoteEnd) 
+          .trim() 
+          .split(","); 
 
-        // Extract the relevant fields
+        
         const conversionRate = quoteData[5];
         const conversionValue = quoteData[6];
 
-        // Set the conversion data in state
         setConversion({
           CONVERSION_RATE: conversionRate,
           CONVERSION_VALUE: conversionValue,
