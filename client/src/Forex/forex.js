@@ -31,25 +31,66 @@ const Forex = () => {
     }
   };
 
+  const currencyPairs = [
+    "USD",
+    "EUR",
+    "JPY",
+    "GBP",
+    "AUD",
+    "CAD",
+    "CHF",
+    "CNY",
+    "HKD",
+    "NZD",
+    "SEK",
+    "SGD",
+    "BCH",
+    "CZK",
+    "DKK",
+    "DOT",
+    "ETH",
+    "FIL",
+    "GRT",
+    "HUF",
+    "INR",
+    "LTC",
+    "MXN",
+    "NOK",
+    "PLN",
+    "RUB",
+    "SAR",
+    "THB",
+    "TRY",
+    "TWD",
+    "XAG",
+    "XAU",
+    "XBT",
+    "ZAR",
+  ];
+
+  const menuItems = currencyPairs.map((item) => (
+    <MenuItem value={item} key={item}>
+      {item}
+    </MenuItem>
+  ));
+
   const getForexData = async () => {
     try {
       const response = await fetch(
-        `https://api.forexfeed.net/convert/${API_ID}/${fromAmount}/${toCurrency}/${fromCurrency}`
+        `https://api.forexfeed.net/convert/${API_ID}/${fromAmount}/${fromCurrency}/${toCurrency}`
       );
       // const data = await response.json();
-      const textData = await response.text(); 
+      const textData = await response.text();
 
-      
       const quoteStart = textData.indexOf("QUOTE START");
       const quoteEnd = textData.indexOf("QUOTE END");
 
       if (quoteStart !== -1 && quoteEnd !== -1) {
         const quoteData = textData
-          .slice(quoteStart + 11, quoteEnd) 
-          .trim() 
-          .split(","); 
+          .slice(quoteStart + 11, quoteEnd)
+          .trim()
+          .split(",");
 
-        
         const conversionRate = quoteData[5];
         const conversionValue = quoteData[6];
 
@@ -88,9 +129,7 @@ const Forex = () => {
                 value={fromCurrency}
                 onChange={handleFromCurrencyChange}
               >
-                <MenuItem value="USD">USD</MenuItem>
-                <MenuItem value="EUR">EUR</MenuItem>
-                <MenuItem value="JPY">JPY</MenuItem>
+                {menuItems}
               </Select>
             </FormControl>
           </div>
@@ -112,9 +151,7 @@ const Forex = () => {
                 value={toCurrency}
                 onChange={handleToCurrencyChange}
               >
-                <MenuItem value="USD">USD</MenuItem>
-                <MenuItem value="EUR">EUR</MenuItem>
-                <MenuItem value="JPY">JPY</MenuItem>
+                {menuItems}
               </Select>
             </FormControl>
           </div>
