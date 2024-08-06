@@ -1,7 +1,7 @@
 import "./App.css";
 import "./global.css";
-import Register from "./Auth/register/Register";
-import Login from "./Auth/login/login";
+// import Register from "./Auth/register/Register";
+// import Login from "./Auth/login/login";
 import Home from "./Home/home";
 import { createBrowserRouter, Outlet } from "react-router-dom";
 import Error from "./Error/error";
@@ -35,14 +35,14 @@ export const stockTradingRouter = createBrowserRouter([
         path: "/home",
         element: <Home />,
       },
-      {
-        path: "/login",
-        element: <Login />,
-      },
-      {
-        path: "/register",
-        element: <Register />,
-      },
+      // {
+      //   path: "/login",
+      //   element: <Login />,
+      // },
+      // {
+      //   path: "/register",
+      //   element: <Register />,
+      // },
       {
         path: "/stocks",
         element: <StockList />,

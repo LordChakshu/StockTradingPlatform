@@ -1,16 +1,20 @@
-import { useContext, useEffect } from "react";
+import { useContext} from "react";
 import { stockContext } from "../Stock-List/stockContext";
 import { cryptoContext } from "../Crypto/cryptoContext";
 import './home.css'
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Home = () => {
   const { stockData } = useContext(stockContext);
   const { cryptoData } = useContext(cryptoContext);
 
+  const {user, isAuthenticated}=useAuth0();
+
   return (
     <div className="homepage-container">
       <div className="header">
         <h1>Stock Trading</h1>
+        { isAuthenticated ? (<span className="welcome-text">Welcome, {user?.name}</span>) : "" }
       </div>
       <div className="main-content">
         <div className="left-content">
