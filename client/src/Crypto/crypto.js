@@ -27,7 +27,7 @@ const CryptoList = () => {
                 }}
               >
                 <td>{crypto.symbol}</td>
-                <td>{crypto.lastPrice}$</td>
+                <td>{crypto.lastPrice} BTC</td>
                 <td>{crypto.priceChange}</td>
                 <td>{crypto.priceChangePercent}%</td>
                 <td>{crypto.volume}</td>

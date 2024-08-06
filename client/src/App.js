@@ -11,6 +11,7 @@ import { StockProvider } from "./Stock-List/stockContext";
 import CryptoList from "./Crypto/crypto";
 import { CryptoProvider } from "./Crypto/cryptoContext";
 import Forex from "./Forex/forex";
+import ProtectedRoute from "./Protected-Route/protected-route";
 
 function App() {
   return (
@@ -45,15 +46,15 @@ export const stockTradingRouter = createBrowserRouter([
       // },
       {
         path: "/stocks",
-        element: <StockList />,
+        element:<ProtectedRoute element={<StockList />} />,
       },
       {
         path: "/crypto",
-        element: <CryptoList />,
+        element:<ProtectedRoute element={<CryptoList />} />,
       },
       {
         path: "/forex",
-        element: <Forex />,
+        element:<ProtectedRoute element={<Forex />} />,
       },
     ],
   },
