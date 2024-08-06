@@ -1,20 +1,25 @@
-import { useContext} from "react";
+import { useContext } from "react";
 import { stockContext } from "../Stock-List/stockContext";
 import { cryptoContext } from "../Crypto/cryptoContext";
-import './home.css'
+import "./home.css";
 import { useAuth0 } from "@auth0/auth0-react";
+import { green } from "@mui/material/colors";
 
 const Home = () => {
   const { stockData } = useContext(stockContext);
   const { cryptoData } = useContext(cryptoContext);
 
-  const {user, isAuthenticated}=useAuth0();
+  const { user, isAuthenticated } = useAuth0();
 
   return (
     <div className="homepage-container">
       <div className="header">
         <h1>Stock Trading</h1>
-        { isAuthenticated ? (<span className="welcome-text">Welcome, {user?.name}</span>) : "" }
+        {isAuthenticated ? (
+          <span className="welcome-text">Welcome, {user?.name}</span>
+        ) : (
+          ""
+        )}
       </div>
       <div className="main-content">
         <div className="left-content">
@@ -43,10 +48,10 @@ const Home = () => {
                           index % 2 === 0 ? "#f9f9f9" : "#e6f7ff",
                       }}
                     >
-                      <td>{stock.symbol}</td>
+                      <td style={{color: stock.dp < 0 ? "red" : "green"}}>{stock.symbol}</td>
                       <td>{stock.c}$</td>
                       <td>{stock.d}</td>
-                      <td>{stock.dp}%</td>
+                      <td style={{color: stock.dp < 0 ? "red" : "green"}}>{stock.dp}%</td>
                       <td>{stock.o}</td>
                       <td>{stock.h}</td>
                       <td>{stock.l}</td>
@@ -81,10 +86,12 @@ const Home = () => {
                           index % 2 === 0 ? "#f9f9f9" : "#e6f7ff",
                       }}
                     >
-                      <td>{crypto.symbol}</td>
-                      <td>{crypto.lastPrice}$</td>
+                      <td style={{color: crypto.priceChangePercent < 0 ? "red" : "green"}}>{crypto.symbol}</td>
+                      <td>{crypto.lastPrice} BTC</td>
                       <td>{crypto.priceChange}</td>
-                      <td>{crypto.priceChangePercent}%</td>
+                      <td style={{color: crypto.priceChangePercent < 0 ? "red" : "green"}}>
+                        {crypto.priceChangePercent}%
+                      </td>
                       <td>{crypto.volume}</td>
                     </tr>
                   ))}
