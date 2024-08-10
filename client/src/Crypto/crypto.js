@@ -1,8 +1,8 @@
-import { useContext} from "react";
-import './crypto.css'
+import { useContext } from "react";
+import "./crypto.css";
 import { cryptoContext } from "./cryptoContext";
 const CryptoList = () => {
-  const {cryptoData} = useContext(cryptoContext);
+  const { cryptoData } = useContext(cryptoContext);
 
   return (
     <div className="crypto-container">
@@ -26,10 +26,22 @@ const CryptoList = () => {
                   backgroundColor: index % 2 === 0 ? "#f9f9f9" : "#e6f7ff",
                 }}
               >
-                <td>{crypto.symbol}</td>
+                <td
+                  style={{
+                    color: crypto.priceChangePercent < 0 ? "red" : "green",
+                  }}
+                >
+                  {crypto.symbol}
+                </td>
                 <td>{crypto.lastPrice} BTC</td>
                 <td>{crypto.priceChange}</td>
-                <td>{crypto.priceChangePercent}%</td>
+                <td
+                  style={{
+                    color: crypto.priceChangePercent < 0 ? "red" : "green",
+                  }}
+                >
+                  {crypto.priceChangePercent}%
+                </td>
                 <td>{crypto.volume}</td>
               </tr>
             ))}

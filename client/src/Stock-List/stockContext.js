@@ -9,6 +9,10 @@ export const StockProvider=({children})=>{
 
     const [stockData,setStockData]=useState([]);
     const [tickerData, setTickerData] = useState([]);
+    const [topSPStocks,setTopSPStocks]=useState([]);
+
+    const topSPTickers = ["AAPL", "MSFT", "GOOGL", "GOOG", "AMZN", "NVDA", "BRK.B", "META", "TSLA", "UNH"];
+
 
     useEffect(() => {
         const getStockData = async (symbol) => {
@@ -22,7 +26,7 @@ export const StockProvider=({children})=>{
             console.error(err);
           }
         };
-    
+       
         const getTickerList = async () => {
           try {
             const response = await fetch(
@@ -41,12 +45,30 @@ export const StockProvider=({children})=>{
             console.error(err);
           }
         };
+        const getTopSPStockData = async () => {
+          try {
+            const stockDataPromises = topSPTickers.map(async (symbol) => {
+              const response = await fetch(
+                `https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${API_KEY}`
+              );
+              const data=await response.json();
+              return { symbol, ...data };
+            });
+    
+            const stockDataArray = await Promise.all(stockDataPromises);
+            setTopSPStocks(stockDataArray);
+          } catch (err) {
+            console.error(err);
+          }
+        };
     
         getTickerList();
+        getTopSPStockData();
+       
       }, []);
 
     return (
-        <stockContext.Provider value={{stockData,setStockData, tickerData, setTickerData}} >
+        <stockContext.Provider value={{stockData,setStockData, tickerData, setTickerData,topSPStocks,setTopSPStocks}} >
             {children}
         </stockContext.Provider>
     );

@@ -23,3 +23,9 @@
     background-color: #f2f2f2; /* Optional: Add background color to table headers */
   }
   
+  .row{
+    display:flex;
+    flex-direction: row;
+    gap: 20px;
+    
+  }

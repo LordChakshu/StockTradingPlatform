@@ -4,7 +4,13 @@ import { Navigate } from 'react-router-dom';
 const ProtectedRoute = ({ element }) => {
   const { isAuthenticated } = useAuth0();
 
-  return isAuthenticated ? element : <Navigate to="/home" />;
+  
+  if (!isAuthenticated) {
+    alert('Login to access');
+    return <Navigate to="/home" />;
+  }
+
+  return element;
 };
 
 export default ProtectedRoute;
