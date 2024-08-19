@@ -11,6 +11,15 @@ export const StockProvider=({children})=>{
     const [tickerData, setTickerData] = useState([]);
     const [topSPStocks,setTopSPStocks]=useState([]);
 
+    const [stockQuantity,setStockQuantity]=useState({});
+
+    const handleStockQuantity = (event, stockSymbol) => {
+      setStockQuantity({
+        ...stockQuantity,
+        [stockSymbol]: event.target.value,
+      });
+    };
+
     const topSPTickers = ["AAPL", "MSFT", "GOOGL", "GOOG", "AMZN", "NVDA", "BRK.B", "META", "TSLA", "UNH"];
 
 
@@ -68,7 +77,7 @@ export const StockProvider=({children})=>{
       }, []);
 
     return (
-        <stockContext.Provider value={{stockData,setStockData, tickerData, setTickerData,topSPStocks,setTopSPStocks}} >
+        <stockContext.Provider value={{stockData,setStockData, tickerData, setTickerData,topSPStocks,setTopSPStocks,stockQuantity,handleStockQuantity}} >
             {children}
         </stockContext.Provider>
     );
