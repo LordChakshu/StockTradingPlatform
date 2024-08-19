@@ -2,7 +2,7 @@ import { useContext } from "react";
 import "./crypto.css";
 import { cryptoContext } from "./cryptoContext";
 const CryptoList = () => {
-  const { cryptoData } = useContext(cryptoContext);
+  const { cryptoData, quantity, handleQuantity } = useContext(cryptoContext);
 
   return (
     <div className="crypto-container">
@@ -23,7 +23,7 @@ const CryptoList = () => {
           <tbody>
             {cryptoData.map((crypto, index) => (
               <tr
-                key={index}
+                key={crypto.symbol}
                 style={{
                   backgroundColor: index % 2 === 0 ? "#f9f9f9" : "#e6f7ff",
                 }}
@@ -46,7 +46,12 @@ const CryptoList = () => {
                 </td>
                 <td>{crypto.volume}</td>
                 <td>
-                  <input type="number" placeholder="Enter Qty" />
+                  <input
+                    type="number"
+                    placeholder="Enter Qty"
+                    value={quantity[crypto.symbol] || ""}
+                    onChange={(e) => handleQuantity(e, crypto.symbol)}
+                  />
                 </td>
                 <td>
                   <button>Buy</button>

@@ -6,6 +6,15 @@ export const CryptoProvider=({children})=>{
 
     const [cryptoData,setCryptoData]=useState([]);
 
+    const [quantity,setQuantity]=useState({});
+
+    const handleQuantity = (event, cryptoSymbol) => {
+      setQuantity({
+        ...quantity,
+        [cryptoSymbol]: event.target.value,
+      });
+    };
+
     useEffect(() => {
         const getCryptoData = async () => {
           try {
@@ -22,7 +31,7 @@ export const CryptoProvider=({children})=>{
       }, []);
 
     return(
-        <cryptoContext.Provider value={{cryptoData}}>
+        <cryptoContext.Provider value={{cryptoData,quantity,handleQuantity}}>
             {children}
         </cryptoContext.Provider>
     );
