@@ -3,7 +3,8 @@ import "./stocks.css";
 import { stockContext } from "./stockContext";
 
 const StockList = () => {
-  const { stockData, setStockData } = useContext(stockContext);
+  const { stockData, setStockData, stockQuantity, handleStockQuantity } =
+    useContext(stockContext);
   const { tickerData, setTickerData } = useContext(stockContext);
   const { topSPStocks } = useContext(stockContext);
 
@@ -33,7 +34,7 @@ const StockList = () => {
             <tbody>
               {topSPStocks.map((stock, index) => (
                 <tr
-                  key={index}
+                  key={stock.symbol}
                   style={{
                     backgroundColor: index % 2 === 0 ? "#f9f9f9" : "#e6f7ff",
                   }}
@@ -50,8 +51,17 @@ const StockList = () => {
                   <td>{stock.h}</td>
                   <td>{stock.l}</td>
                   <td>{stock.pc}</td>
-                  <td><input type='number' placeholder="Enter Qty"/></td>
-                  <td><button>Buy</button></td>
+                  <td>
+                  <input
+                    type="number"
+                    placeholder="Enter Qty"
+                    value={stockQuantity[stock.symbol] || ""}
+                    onChange={(e) => handleStockQuantity(e, stock.symbol)}
+                  />
+                  </td>
+                  <td>
+                    <button>Buy</button>
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -77,7 +87,7 @@ const StockList = () => {
             <tbody>
               {stockData.map((stock, index) => (
                 <tr
-                  key={index}
+                  key={stock.symbol}
                   style={{
                     backgroundColor: index % 2 === 0 ? "#f9f9f9" : "#e6f7ff",
                   }}
@@ -94,8 +104,17 @@ const StockList = () => {
                   <td>{stock.h}</td>
                   <td>{stock.l}</td>
                   <td>{stock.pc}</td>
-                  <td><input type='number' placeholder="Enter Qty"/></td>
-                  <td><button>Buy</button></td>
+                  <td>
+                  <input
+                    type="number"
+                    placeholder="Enter Qty"
+                    value={stockQuantity[stock.symbol] || ""}
+                    onChange={(e) => handleStockQuantity(e, stock.symbol)}
+                  />
+                  </td>
+                  <td>
+                    <button>Buy</button>
+                  </td>
                 </tr>
               ))}
             </tbody>
