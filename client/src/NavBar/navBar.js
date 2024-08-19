@@ -5,7 +5,9 @@ const NavBar = () => {
   const { loginWithRedirect, isAuthenticated, logout } = useAuth0();
   return (
     <div className="navbar-container">
-      <div className="logo"><Link to='/home'>StockTradingPlatform</Link></div>
+      <div className="logo">
+        <Link to="/home">StockTradingPlatform</Link>
+      </div>
       <div className="menu-items">
         <div className="item">
           <Link to="/home">Home</Link>
@@ -19,6 +21,15 @@ const NavBar = () => {
         <div className="item">
           <Link to="/forex">Forex</Link>
         </div>
+
+        {isAuthenticated ? (
+          <div className="item">
+            <Link to="/portfolio">Portfolio</Link>
+          </div>
+        ) : (
+          ""
+        )}
+
         <div className="item">
           {!isAuthenticated ? (
             <span
