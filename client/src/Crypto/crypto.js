@@ -16,6 +16,8 @@ const CryptoList = () => {
               <th>Price Change</th>
               <th>Change %</th>
               <th>Volume</th>
+              <th>Quantity</th>
+              <th> </th>
             </tr>
           </thead>
           <tbody>
@@ -43,6 +45,12 @@ const CryptoList = () => {
                   {crypto.priceChangePercent}%
                 </td>
                 <td>{crypto.volume}</td>
+                <td>
+                  <input type="number" placeholder="Enter Qty" />
+                </td>
+                <td>
+                  <button>Buy</button>
+                </td>
               </tr>
             ))}
           </tbody>

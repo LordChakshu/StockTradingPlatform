@@ -12,7 +12,7 @@ const StockList = () => {
       <div className="stock-list-header">
         <strong>STOCKS LIST</strong>
       </div>
-      <div className="row">
+      <div className="column">
         <div className="sp-stocks">
           <table className="top-stocks-table">
             <thead>
@@ -25,6 +25,8 @@ const StockList = () => {
                 <th>High</th>
                 <th>Low</th>
                 <th>Previous Close</th>
+                <th>Quantity</th>
+                <th> </th>
                 {/* <th>Volume</th> */}
               </tr>
             </thead>
@@ -48,6 +50,8 @@ const StockList = () => {
                   <td>{stock.h}</td>
                   <td>{stock.l}</td>
                   <td>{stock.pc}</td>
+                  <td><input type='number' placeholder="Enter Qty"/></td>
+                  <td><button>Buy</button></td>
                 </tr>
               ))}
             </tbody>
@@ -65,6 +69,8 @@ const StockList = () => {
                 <th>High</th>
                 <th>Low</th>
                 <th>Previous Close</th>
+                <th>Quantity</th>
+                <th> </th>
                 {/* <th>Volume</th> */}
               </tr>
             </thead>
@@ -88,6 +94,8 @@ const StockList = () => {
                   <td>{stock.h}</td>
                   <td>{stock.l}</td>
                   <td>{stock.pc}</td>
+                  <td><input type='number' placeholder="Enter Qty"/></td>
+                  <td><button>Buy</button></td>
                 </tr>
               ))}
             </tbody>
