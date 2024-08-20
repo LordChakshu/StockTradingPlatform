@@ -2,7 +2,12 @@ import { useContext } from "react";
 import "./crypto.css";
 import { cryptoContext } from "./cryptoContext";
 const CryptoList = () => {
-  const { cryptoData, quantity, handleQuantity } = useContext(cryptoContext);
+  const {
+    cryptoData,
+    quantity,
+    handleQuantity,
+    handleBuyCrypto,
+  } = useContext(cryptoContext);
 
   return (
     <div className="crypto-container">
@@ -54,7 +59,17 @@ const CryptoList = () => {
                   />
                 </td>
                 <td>
-                  <button>Buy</button>
+                  <button
+                    onClick={() =>
+                      handleBuyCrypto(
+                        crypto.symbol,
+                        crypto.lastPrice,
+                        crypto.volume
+                      )
+                    }
+                  >
+                    Buy
+                  </button>
                 </td>
               </tr>
             ))}

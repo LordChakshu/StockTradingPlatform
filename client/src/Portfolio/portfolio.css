@@ -1,4 +1,13 @@
-.portfolio-container{
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    background:white;
+.portfolio-container {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  background: white;
+}
+table {
+  border-collapse: collapse;
+  td,
+  th {
+    border: 1px solid rgba(0, 0, 0, 0.158);
+    padding: 10px;
+    text-align: left;
+  }
 }
