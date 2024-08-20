@@ -13,6 +13,13 @@ export const CryptoProvider = ({ children }) => {
     console.log("Updated buyCryptoList:", buyCryptoList);
   }, [buyCryptoList]);
 
+  useEffect(() => {
+    const savedBuyCryptoList = localStorage.getItem("buyCryptoList");
+    if (savedBuyCryptoList) {
+      setBuyCryptoList(JSON.parse(savedBuyCryptoList));
+    }
+  }, []);
+
   const handleBuyCrypto = (cryptoSymbol, cryptoPrice, cryptoVolume) => {
     const quantityToBuy = quantity[cryptoSymbol];
 
@@ -20,14 +27,23 @@ export const CryptoProvider = ({ children }) => {
     console.log("Available volume:", cryptoVolume);
 
     if (quantityToBuy && quantityToBuy > 0 && cryptoVolume > quantityToBuy) {
-      setBuyCryptoList((prevList) => [
-        ...prevList,
-        { symbol: cryptoSymbol, price: cryptoPrice, quantity: quantityToBuy },
-      ]);
-    }
-    console.log(buyCryptoList);
-  };
+      const newBuy = {
+        symbol: cryptoSymbol,
+        price: cryptoPrice,
+        quantity: quantityToBuy,
+      };
 
+      setBuyCryptoList((prevList) => {
+        const updatedList = [...prevList, newBuy];
+
+        // Saving to localStorage
+        localStorage.setItem("buyCryptoList", JSON.stringify(updatedList));
+
+        return updatedList;
+      });
+      console.log(buyCryptoList);
+    }
+  };
   const handleQuantity = (event, cryptoSymbol) => {
     setQuantity({
       ...quantity,
