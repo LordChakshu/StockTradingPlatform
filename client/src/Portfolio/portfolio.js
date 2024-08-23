@@ -5,11 +5,12 @@ import { stockContext } from "../Stock-List/stockContext";
 
 const Portfolio = () => {
   const { buyCryptoList, cryptoData } = useContext(cryptoContext);
-  const { stockBuyList, stockData,topSPStocks} = useContext(stockContext);
+  const { stockBuyList,topSPStocks} = useContext(stockContext);
   useEffect(() => {}, [buyCryptoList,stockBuyList]);
   return (
     <>
-      <div className="portfolio-container">
+      <div className="crypto-portfolio-container">
+        <h2>Crypto Portfolio</h2>
         <table>
           <thead>
             <tr>
@@ -48,7 +49,7 @@ const Portfolio = () => {
                     const quantityBought = parseFloat(crypto.quantity || 0);
 
                     return (currentPrice - purchasePrice) * quantityBought;
-                  })()}{" "}
+                  })()}
                   BTC
                 </td>
               </tr>
@@ -56,7 +57,8 @@ const Portfolio = () => {
           </tbody>
         </table>
       </div>
-      <div className="portfolio-container">
+      <div className="stock-portfolio-container">
+        <h2>Stock Portfolio</h2>
         <table>
           <thead>
             <tr>
@@ -71,12 +73,6 @@ const Portfolio = () => {
          let matchingStock = topSPStocks.find(
           (data) => data.symbol === stock.symbol
         );
-
-        if (!matchingStock) {
-          matchingStock = stockData.find(
-            (data) => data.symbol === stock.symbol
-          );
-        }
 
         const currentPrice = matchingStock ? parseFloat(matchingStock.c) : 0;
         const purchasePrice = parseFloat(stock.price || 0);
