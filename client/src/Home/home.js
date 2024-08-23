@@ -3,10 +3,9 @@ import { stockContext } from "../Stock-List/stockContext";
 import { cryptoContext } from "../Crypto/cryptoContext";
 import "./home.css";
 import { useAuth0 } from "@auth0/auth0-react";
-import { green } from "@mui/material/colors";
 
 const Home = () => {
-  const { stockData } = useContext(stockContext);
+  const {  topSPStocks } = useContext(stockContext);
   const { cryptoData } = useContext(cryptoContext);
 
   const { user, isAuthenticated } = useAuth0();
@@ -40,7 +39,7 @@ const Home = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {stockData.slice(0, 10).map((stock, index) => (
+                  { topSPStocks.slice(0, 10).map((stock, index) => (
                     <tr
                       key={index}
                       style={{
