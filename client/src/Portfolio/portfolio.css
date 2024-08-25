@@ -1,10 +1,12 @@
+.portfolio-container{
+  display:flex;
+  flex-direction: column;
+}
 .stock-portfolio-container,
 .crypto-portfolio-container {
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   background: white;
   margin-bottom: 20px; 
-  width: auto;
-  height: auto;
   display: inline-block; 
 }
 table {
