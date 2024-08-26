@@ -118,8 +118,8 @@ const Portfolio = () => {
                     {stock.symbol}
                   </td>
                   <td>{stock.quantity}</td>
-                  <td>{currentPrice}</td>
                   <td>{stock.price}$</td>
+                  <td>{currentPrice}</td>
                   <td>{estimation}$</td>
                 </tr>
               );
