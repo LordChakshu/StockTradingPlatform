@@ -15,7 +15,7 @@ const Portfolio = () => {
   let totalCryptoEstimation = 0;
   useEffect(() => {}, [buyCryptoList, stockBuyList]);
   return (
-    <>
+    <div>
       <div className="crypto-portfolio-container">
         <h2>Crypto Portfolio</h2>
         <table>
@@ -26,6 +26,8 @@ const Portfolio = () => {
               <th>Price Bought</th>
               <th>Current Price</th>
               <th>P/L Estimation</th>
+              <th>Quantity</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -64,6 +66,8 @@ const Portfolio = () => {
                     {estimation}
                     BTC
                   </td>
+                  <td><input type="Number" placeholder="Add Qty"/></td>
+                  <td><button>Sell</button></td>
                 </tr>
               );
             })}
@@ -87,6 +91,8 @@ const Portfolio = () => {
               <th>Price Bought</th>
               <th>Current Price</th>
               <th>P/L Estimation</th>
+              <th>Quantity</th>
+              <th></th>  
             </tr>
           </thead>
           <tbody>
@@ -121,6 +127,8 @@ const Portfolio = () => {
                   <td>{stock.price}$</td>
                   <td>{currentPrice}</td>
                   <td>{estimation}$</td>
+                  <td><input type="Number" placeholder="Add Qty"/></td>
+                  <td><button>Sell</button></td>
                 </tr>
               );
             })}
@@ -142,7 +150,7 @@ const Portfolio = () => {
           </tbody>
         </table>
       </div>
-    </>
+    </div>
   );
 };
 
