@@ -52,24 +52,36 @@ export const StockProvider = ({ children }) => {
   };
 
   const handleBuyStock = (stockSymbol, stockPrice) => {
-    const quantityToBuy = stockQuantity[stockSymbol];
+    const quantityToBuy = parseFloat(stockQuantity[stockSymbol]);
 
     console.log("Quantity to buy:", quantityToBuy);
     if (stockQuantity && quantityToBuy > 0) {
-      const newBuyStock = {
-        symbol: stockSymbol,
-        price: stockPrice,
-        quantity: quantityToBuy,
-      };
-      setStockBuyList((prevList) => {
-        const updatedStockList = [...prevList, newBuyStock];
+      setStockBuyList((prevList)=>{
+        let updatedStockList=prevList.map((stock)=>{
+          if(stock.symbol===stockSymbol && stock.price===stockPrice){
+            return{
+              ...stock,
+              quantity: parseFloat(stock.quantity) + quantityToBuy,
+            }
+          }
+          return stock;
+        })
 
-        // Saving to localStorage
+        const existingIndex=updatedStockList.findIndex((stock)=>stock.symbol===stockSymbol && stock.price===stockPrice)
+
+        if(existingIndex===-1){
+          const newBuyStock = {
+            symbol: stockSymbol,
+            price: stockPrice,
+            quantity: quantityToBuy,
+          };
+          updatedStockList = [...updatedStockList, newBuyStock];
+        }
         localStorage.setItem("stockBuyList", JSON.stringify(updatedStockList));
 
         return updatedStockList;
       });
-      console.log(stockBuyList);
+     
     }
   };
 

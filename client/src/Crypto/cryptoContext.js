@@ -21,29 +21,43 @@ export const CryptoProvider = ({ children }) => {
   }, []);
 
   const handleBuyCrypto = (cryptoSymbol, cryptoPrice, cryptoVolume) => {
-    const quantityToBuy = quantity[cryptoSymbol];
-
-    console.log("Quantity to buy:", quantityToBuy);
-    console.log("Available volume:", cryptoVolume);
-
-    if (quantityToBuy && quantityToBuy > 0 && cryptoVolume > quantityToBuy) {
-      const newBuy = {
-        symbol: cryptoSymbol,
-        price: cryptoPrice,
-        quantity: quantityToBuy,
-      };
-
+    const quantityToBuy = parseFloat(quantity[cryptoSymbol]);
+  
+    if (quantityToBuy > 0 && cryptoVolume > quantityToBuy) {
       setBuyCryptoList((prevList) => {
-        const updatedList = [...prevList, newBuy];
-
-        // Saving to localStorage
+        let updatedList = prevList.map((crypto) => {
+          if (crypto.symbol === cryptoSymbol && crypto.price === cryptoPrice) {
+            return {
+              ...crypto,
+              quantity: parseFloat(crypto.quantity) + quantityToBuy,
+            };
+          }
+          return crypto;
+        });
+  
+        const existingIndex = updatedList.findIndex(
+          (crypto) => crypto.symbol === cryptoSymbol && crypto.price === cryptoPrice
+        );
+  
+        if (existingIndex === -1) {
+          const newBuy = {
+            symbol: cryptoSymbol,
+            price: cryptoPrice,
+            quantity: quantityToBuy,
+          };
+          updatedList = [...updatedList, newBuy];
+        }
+  
+        // Save the updated list to localStorage
         localStorage.setItem("buyCryptoList", JSON.stringify(updatedList));
-
+  
+        console.log("Updated buyCryptoList:", updatedList);
+  
         return updatedList;
       });
-      console.log(buyCryptoList);
-    }
+    } 
   };
+    
   const handleQuantity = (event, cryptoSymbol) => {
     setQuantity({
       ...quantity,
