@@ -32,6 +32,7 @@ const Portfolio = () => {
           </thead>
           <tbody>
             {buyCryptoList.map((crypto, index) => {
+              const uniqueCryptoKey = `${crypto.symbol}-${crypto.price}`;
               const matchingCrypto = cryptoData.find(
                 (data) => data.symbol === crypto.symbol
               );
@@ -47,7 +48,7 @@ const Portfolio = () => {
 
               return (
                 <tr
-                  key={crypto.symbol}
+                  key={uniqueCryptoKey}
                   style={{
                     backgroundColor: index % 2 === 0 ? "#f9f9f9" : "#e6f7ff",
                   }}
@@ -97,6 +98,7 @@ const Portfolio = () => {
           </thead>
           <tbody>
             {stockBuyList.map((stock, index) => {
+              const uniqueStockKey = `${stock.symbol}-${stock.price}`;
               let matchingStock = topSPStocks.find(
                 (data) => data.symbol === stock.symbol
               );
@@ -115,7 +117,7 @@ const Portfolio = () => {
 
               return (
                 <tr
-                  key={stock.symbol}
+                  key={uniqueStockKey}
                   style={{
                     backgroundColor: index % 2 === 0 ? "#f9f9f9" : "#e6f7ff",
                   }}
