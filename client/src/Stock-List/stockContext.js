@@ -56,21 +56,26 @@ export const StockProvider = ({ children }) => {
 
     console.log("Quantity to buy:", quantityToBuy);
     if (stockQuantity && quantityToBuy > 0) {
-      setStockBuyList((prevList)=>{
-        let updatedStockList=prevList.map((stock)=>{
-          if(stock.symbol===stockSymbol && stock.price===stockPrice){
-            return{
+      const uniqueKey = `${stockSymbol}-${stockPrice}`;
+
+      setStockBuyList((prevList) => {
+        let updatedStockList = prevList.map((stock) => {
+          if (stock.symbol === stockSymbol && stock.price === stockPrice) {
+            return {
               ...stock,
               quantity: parseFloat(stock.quantity) + quantityToBuy,
-            }
+            };
           }
           return stock;
-        })
+        });
 
-        const existingIndex=updatedStockList.findIndex((stock)=>stock.symbol===stockSymbol && stock.price===stockPrice)
+        const existingIndex = updatedStockList.findIndex(
+          (stock) => stock.symbol === stockSymbol && stock.price === stockPrice
+        );
 
-        if(existingIndex===-1){
+        if (existingIndex === -1) {
           const newBuyStock = {
+            uniqueKey,
             symbol: stockSymbol,
             price: stockPrice,
             quantity: quantityToBuy,
@@ -81,7 +86,6 @@ export const StockProvider = ({ children }) => {
 
         return updatedStockList;
       });
-     
     }
   };
 
@@ -97,36 +101,36 @@ export const StockProvider = ({ children }) => {
   }, [stockBuyList]);
 
   useEffect(() => {
-  //   const getStockData = async (symbol) => {
-  //     try {
-  //       const response = await fetch(
-  //         `https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${API_KEY}`
-  //       );
-  //       const data = await response.json();
-  //       return { symbol, ...data };
-  //     } catch (err) {
-  //       console.error(err);
-  //     }
-  //   };
+    //   const getStockData = async (symbol) => {
+    //     try {
+    //       const response = await fetch(
+    //         `https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${API_KEY}`
+    //       );
+    //       const data = await response.json();
+    //       return { symbol, ...data };
+    //     } catch (err) {
+    //       console.error(err);
+    //     }
+    //   };
 
-  //   const getTickerList = async () => {
-  //     try {
-  //       const response = await fetch(
-  //         `https://finnhub.io/api/v1/stock/symbol?exchange=US&token=${API_KEY}`
-  //       );
-  //       const data = await response.json();
-  //       setTickerData(data);
+    //   const getTickerList = async () => {
+    //     try {
+    //       const response = await fetch(
+    //         `https://finnhub.io/api/v1/stock/symbol?exchange=US&token=${API_KEY}`
+    //       );
+    //       const data = await response.json();
+    //       setTickerData(data);
 
-  //       if (response.ok) {
-  //         const ticker = data.slice(0, 30).map((item) => item.symbol);
-  //         const stockPromises = ticker.map((item) => getStockData(item));
-  //         const stockDataArray = await Promise.all(stockPromises);
-  //         setStockData(stockDataArray);
-  //       }
-  //     } catch (err) {
-  //       console.error(err);
-  //     }
-  //   };
+    //       if (response.ok) {
+    //         const ticker = data.slice(0, 30).map((item) => item.symbol);
+    //         const stockPromises = ticker.map((item) => getStockData(item));
+    //         const stockDataArray = await Promise.all(stockPromises);
+    //         setStockData(stockDataArray);
+    //       }
+    //     } catch (err) {
+    //       console.error(err);
+    //     }
+    //   };
     const getTopSPStockData = async () => {
       try {
         const stockDataPromises = topSPTickers.map(async (symbol) => {
@@ -161,6 +165,7 @@ export const StockProvider = ({ children }) => {
         handleStockQuantity,
         stockBuyList,
         handleBuyStock,
+        setStockBuyList,
       }}
     >
       {children}

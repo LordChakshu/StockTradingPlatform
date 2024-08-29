@@ -1,11 +1,17 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./portfolio.css";
 import { cryptoContext } from "../Crypto/cryptoContext";
 import { stockContext } from "../Stock-List/stockContext";
 
 const Portfolio = () => {
-  const { buyCryptoList, cryptoData } = useContext(cryptoContext);
-  const { stockBuyList, topSPStocks } = useContext(stockContext);
+  const { buyCryptoList, cryptoData, setBuyCryptoList } =
+    useContext(cryptoContext);
+  const { stockBuyList, topSPStocks, setStockBuyList } =
+    useContext(stockContext);
+
+  const [sellCryptoQuantity, setSellCryptoQuantity] = useState({});
+  const [sellStockQuantity, setSellStockQuantity] = useState({});
+
   let totalStockAmount = 0;
   let totalStockQuantity = 0;
   let totalStockEstimation = 0;
@@ -13,7 +19,86 @@ const Portfolio = () => {
   let totalCryptoAmount = 0;
   let totalCryptoQuantity = 0;
   let totalCryptoEstimation = 0;
-  useEffect(() => {}, [buyCryptoList, stockBuyList]);
+  useEffect(() => {
+    console.log("Updated buyCryptoList after sell:", buyCryptoList);
+  }, [buyCryptoList, stockBuyList]);
+
+  const handleSellCryptoQuantity = (event, uniqueCryptoKey) => {
+    setSellCryptoQuantity({
+      [uniqueCryptoKey]: event.target.value,
+    });
+  };
+  const handleSellStockQuantity = (event, uniqueStockKey) => {
+    setSellStockQuantity({
+      [uniqueStockKey]: event.target.value,
+    });
+  };
+
+  const handleSellCrypto = (uniqueCryptoKey, cryptoSymbol, cryptoPrice) => {
+    const sellQuantity = parseFloat(sellCryptoQuantity[uniqueCryptoKey]);
+    console.log("crypto quantity to sell", sellQuantity);
+    if (!sellQuantity || sellQuantity <= 0) {
+      console.log("Invalid sell quantity");
+      return;
+    }
+
+    setBuyCryptoList((prevList) => {
+      const updatedList = prevList
+        .map((crypto) => {
+          if (crypto.uniqueKey === uniqueCryptoKey) {
+            const newQuantity = parseFloat(crypto.quantity) - sellQuantity;
+
+            if (newQuantity > 0) {
+              return { ...crypto, quantity: newQuantity };
+            } else {
+              return null;
+            }
+          }
+          return crypto;
+        })
+        .filter(Boolean);
+
+      // Update localStorage
+      localStorage.setItem("buyCryptoList", JSON.stringify(updatedList));
+
+      console.log("Updated buyCryptoList after sell:", updatedList);
+
+      return updatedList;
+    });
+  };
+
+  const handleSellStock = (uniqueStockKey, stockSymbol, stockPrice) => {
+    const sellQuantity = parseFloat(sellStockQuantity[uniqueStockKey]);
+    console.log("Stock quantity to sell", sellQuantity);
+
+    if (!sellQuantity || sellQuantity <= 0) {
+      console.log("Invalid sell quantity");
+      return;
+    }
+
+    setStockBuyList((prevList) => {
+      const updatedList = prevList.map((stock) => {
+        if (stock.uniqueKey === uniqueStockKey) {
+          const newQuantity = parseFloat(stock.quantity) - sellQuantity;
+
+          if (newQuantity > 0) {
+            return { ...stock, quantity: newQuantity };
+          }else {
+            return null;
+          }
+
+        }
+        return stock;
+      })
+      .filter(Boolean);
+
+      localStorage.setItem("stockBuyList", JSON.stringify(updatedList));
+
+      console.log("Updated stockBuyList after sell:", updatedList);
+      return updatedList;
+    });
+  };
+
   return (
     <div>
       <div className="crypto-portfolio-container">
@@ -40,11 +125,12 @@ const Portfolio = () => {
               const purchasePrice = parseFloat(crypto.price || 0);
               const quantityBought = parseFloat(crypto.quantity || 0);
 
-              const estimation=(currentPrice - purchasePrice) * quantityBought;
+              const estimation =
+                (currentPrice - purchasePrice) * quantityBought;
 
-              totalCryptoAmount=totalCryptoAmount+purchasePrice;
-              totalCryptoQuantity=totalCryptoQuantity+quantityBought;
-              totalCryptoEstimation=totalCryptoEstimation+estimation;
+              totalCryptoAmount = totalCryptoAmount + purchasePrice;
+              totalCryptoQuantity = totalCryptoQuantity + quantityBought;
+              totalCryptoEstimation = totalCryptoEstimation + estimation;
 
               return (
                 <tr
@@ -67,17 +153,48 @@ const Portfolio = () => {
                     {estimation}
                     BTC
                   </td>
-                  <td><input type="Number" placeholder="Add Qty"/></td>
-                  <td><button>Sell</button></td>
+                  <td>
+                    <input
+                      type="Number"
+                      placeholder="Add Qty"
+                      value={sellCryptoQuantity[uniqueCryptoKey] || ""}
+                      onChange={(e) =>
+                        handleSellCryptoQuantity(e, uniqueCryptoKey)
+                      }
+                    />
+                  </td>
+                  <td>
+                    <button
+                      onClick={() =>
+                        handleSellCrypto(
+                          uniqueCryptoKey,
+                          crypto.symbol,
+                          crypto.price
+                        )
+                      }
+                    >
+                      Sell
+                    </button>
+                  </td>
                 </tr>
               );
             })}
             <tr>
-              <td><strong>Total</strong></td>
-              <td><strong>{totalCryptoQuantity}</strong></td>
-              <td><strong>{totalCryptoAmount}</strong></td>
-              <td><strong></strong></td>
-              <td><strong>{totalCryptoEstimation}</strong></td>
+              <td>
+                <strong>Total</strong>
+              </td>
+              <td>
+                <strong>{totalCryptoQuantity}</strong>
+              </td>
+              <td>
+                <strong>{totalCryptoAmount}</strong>
+              </td>
+              <td>
+                <strong></strong>
+              </td>
+              <td>
+                <strong>{totalCryptoEstimation}</strong>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -93,7 +210,7 @@ const Portfolio = () => {
               <th>Current Price</th>
               <th>P/L Estimation</th>
               <th>Quantity</th>
-              <th></th>  
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -129,8 +246,30 @@ const Portfolio = () => {
                   <td>{stock.price}$</td>
                   <td>{currentPrice}</td>
                   <td>{estimation}$</td>
-                  <td><input type="Number" placeholder="Add Qty"/></td>
-                  <td><button>Sell</button></td>
+                  <td>
+                    <input
+                      type="Number"
+                      placeholder="Add Qty"
+                      value={sellStockQuantity[uniqueStockKey] || ""}
+                      onChange={(e) => {
+                        handleSellStockQuantity(e, uniqueStockKey);
+                      }}
+                    />
+                  </td>
+                  <td>
+                    <button
+                      type="submit"
+                      onClick={() =>
+                        handleSellStock(
+                          uniqueStockKey,
+                          stock.symbol,
+                          stock.price
+                        )
+                      }
+                    >
+                      Sell
+                    </button>
+                  </td>
                 </tr>
               );
             })}

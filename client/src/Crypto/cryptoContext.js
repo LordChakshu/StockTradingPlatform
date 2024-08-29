@@ -24,6 +24,8 @@ export const CryptoProvider = ({ children }) => {
     const quantityToBuy = parseFloat(quantity[cryptoSymbol]);
   
     if (quantityToBuy > 0 && cryptoVolume > quantityToBuy) {
+      const uniqueKey = `${cryptoSymbol}-${cryptoPrice}`;
+      
       setBuyCryptoList((prevList) => {
         let updatedList = prevList.map((crypto) => {
           if (crypto.symbol === cryptoSymbol && crypto.price === cryptoPrice) {
@@ -41,6 +43,7 @@ export const CryptoProvider = ({ children }) => {
   
         if (existingIndex === -1) {
           const newBuy = {
+            uniqueKey,
             symbol: cryptoSymbol,
             price: cryptoPrice,
             quantity: quantityToBuy,
@@ -88,6 +91,7 @@ export const CryptoProvider = ({ children }) => {
         handleQuantity,
         buyCryptoList,
         handleBuyCrypto,
+        setBuyCryptoList
       }}
     >
       {children}
