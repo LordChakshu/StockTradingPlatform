@@ -3,7 +3,7 @@ import "./global.css";
 // import Register from "./Auth/register/Register";
 // import Login from "./Auth/login/login";
 import Home from "./Home/home";
-import { createBrowserRouter, Outlet } from "react-router-dom";
+import { createBrowserRouter, Outlet, useLocation } from "react-router-dom";
 import Error from "./Error/error";
 import StockList from "./Stock-List/stocks";
 import NavBar from "./NavBar/navBar";
@@ -13,12 +13,16 @@ import { CryptoProvider } from "./Crypto/cryptoContext";
 import Forex from "./Forex/forex";
 import ProtectedRoute from "./Protected-Route/protected-route";
 import Portfolio from "./Portfolio/portfolio";
+import Disclaimer from "./Disclaimer/disclaimer";
 
 function App() {
+  const location = useLocation();
+
   return (
     <div className="App">
       <NavBar />
       <div className="main-content">
+      {location.pathname === "/" && <Disclaimer />}
       <StockProvider>
         <CryptoProvider>
           <Outlet />
