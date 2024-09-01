@@ -21,6 +21,7 @@ Setup
 
 Clone the repo:
 git clone https://github.com/LordChakshu/StockTradingPlatform.git
+
 cd StockTradingPlatform
 
 Install dependencies:
