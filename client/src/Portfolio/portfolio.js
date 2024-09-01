@@ -13,7 +13,10 @@ const Portfolio = () => {
   const [sellStockQuantity, setSellStockQuantity] = useState({});
 
   const [investedStockAmount, setInvestedStockAmount] = useState(0);
+  const [investedCryptoAmount,setInvestedCryptoAmount]=useState(0);
+
   const [totalStockPL, setTotalStockPL] = useState(0);
+  const [totalCryptoPL,setTotalCryptoPL]=useState(0);
 
   let totalStockAmount = 0;
   let totalStockQuantity = 0;
@@ -24,17 +27,26 @@ const Portfolio = () => {
   let totalCryptoEstimation = 0;
   useEffect(() => {
     console.log("Updated buyCryptoList after sell:", buyCryptoList);
-    let totalAmount = stockBuyList.reduce(
+    let totalStockAmount = stockBuyList.reduce(
       (total, stock) => total + stock.price * stock.quantity,
       0
     );
-    setInvestedStockAmount(totalAmount);
-  }, [buyCryptoList, stockBuyList, investedStockAmount]);
+    let totalCryptoAmount=buyCryptoList.reduce((total,crypto)=>total+crypto.price*crypto.quantity,0);
+
+    setInvestedStockAmount(totalStockAmount);
+    setInvestedCryptoAmount(totalCryptoAmount);
+  }, [buyCryptoList, stockBuyList, investedStockAmount,investedCryptoAmount]);
 
   useEffect(() => {
     const storedPL = localStorage.getItem("totalStockPL");
     if (storedPL) {
       setTotalStockPL(parseFloat(storedPL));
+    }
+  }, []);
+  useEffect(() => {
+    const storedPL = localStorage.getItem("totalCryptoPL");
+    if (storedPL) {
+      setTotalCryptoPL(parseFloat(storedPL));
     }
   }, []);
 
@@ -49,19 +61,24 @@ const Portfolio = () => {
     });
   };
 
-  const handleSellCrypto = (uniqueCryptoKey, cryptoSymbol, cryptoPrice) => {
+  const handleSellCrypto = (uniqueCryptoKey, cryptoSymbol,cryptoPrice,currentPrice) => {
     const sellQuantity = parseFloat(sellCryptoQuantity[uniqueCryptoKey]);
     console.log("crypto quantity to sell", sellQuantity);
     if (!sellQuantity || sellQuantity <= 0) {
       console.log("Invalid sell quantity");
       return;
     }
+    
+    let totalProfitOrLoss = 0;
 
     setBuyCryptoList((prevList) => {
       const updatedList = prevList
         .map((crypto) => {
           if (crypto.uniqueKey === uniqueCryptoKey) {
             const newQuantity = parseFloat(crypto.quantity) - sellQuantity;
+
+            const profitOrLossPerCrypto=parseFloat(currentPrice)-parseFloat(cryptoPrice);
+            totalProfitOrLoss=totalProfitOrLoss+profitOrLossPerCrypto*sellQuantity;
 
             if (newQuantity > 0) {
               return { ...crypto, quantity: newQuantity };
@@ -80,6 +97,11 @@ const Portfolio = () => {
 
       return updatedList;
     });
+    setTotalCryptoPL((prevPL)=>{
+      const updatedPL = prevPL + totalProfitOrLoss;
+      localStorage.setItem("totalCryptoPL", updatedPL);
+      return updatedPL;
+    })
   };
 
   const handleSellStock = (
@@ -200,7 +222,8 @@ const Portfolio = () => {
                         handleSellCrypto(
                           uniqueCryptoKey,
                           crypto.symbol,
-                          crypto.price
+                          crypto.price,
+                          currentPrice
                         )
                       }
                     >
@@ -324,18 +347,29 @@ const Portfolio = () => {
           </tbody>
         </table>
       </div>
-      <div className="Personal-stats">
-        <div className="stock-stats">
+      <div className="personal-stats">
+        <div className="stats">
+        <div className="stats-header"><h3>Stocks Portfolio P/L</h3></div>
           <div className="invested">
-            <span className="invested-text">Total Amount Invested :</span>
+            <span className="invested-text"><strong>Total Investement Amount in Stocks :  </strong></span>
             {investedStockAmount}$
           </div>
           <div className="invested">
-            <span className="invested-text">Total Profit :</span>
+            <span className="invested-text"><strong>Total Profit Earned :  </strong></span>
             {totalStockPL}$
           </div>
         </div>
-        <div className="crypto-stats"></div>
+        <div className="stats">
+          <div className="stats-header"><h3>Crypto Portfolio P/L</h3></div>
+          <div className="invested">
+            <span className="invested-text"><strong>Total Investment Amount in Crypto :  </strong></span>
+            {investedCryptoAmount}BTC
+          </div>
+          <div className="invested">
+            <span className="invested-text"><strong>Total Profit Earned :  </strong></span>
+            {totalCryptoPL}BTC
+          </div>
+        </div>
       </div>
     </div>
   );
