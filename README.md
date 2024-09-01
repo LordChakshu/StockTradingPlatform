@@ -8,9 +8,13 @@ Manage portfolios
 Real-time stock and crypto data from FinHub and Binance
 Auth0 for authentication and protected routes
 Regular updates for stock and crypto prices
+
 Tech Stack
+
 Frontend: React.js
+
 APIs: FinHub, Binance
+
 Authentication: Auth0
 
 Setup
